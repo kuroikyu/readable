@@ -1,54 +1,54 @@
-# React + TypeScript + Vite
+# Readable
+Your friendly neighborhood book reader.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Pages
+- [ ] /login
+- [ ] /signup
+- [ ] /books
+- [ ] /read?b=:id
+- [ ] /me
+- [ ] /me/stats
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Tools
+- [Vite (React)](https://vite.dev/)
+- [React Router](https://reactrouter.com/home)
+- [json-server](https://www.npmjs.com/package/json-server)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## How to run
+From the root of the project install dependencies.
+```sh
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Build the frontend.
+```sh
+pnpm run build
 ```
+
+Run the app.
+```sh
+pnpm run preview
+```
+
+Want to deploy to a cloud provider? Check Vite's documentation [here to learn more](https://vite.dev/guide/static-deploy.html).
+
+
+## How to develop
+From the root of the project install dependencies.
+```sh
+pnpm install
+```
+
+Start the database. This should be available under `http://localhost:3000` but watch the terminal for more details. Keep running for the frontend to access it.
+```sh
+pnpm run server
+```
+
+Start the frontend. This should be available under `http://localhost:5173` but watch the terminal for more details.
+```sh
+pnpm run dev
+```
+
