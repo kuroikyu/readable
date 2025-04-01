@@ -1,0 +1,46 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Las aventuras de Juan",
+      "author": "Autor Ficticio",
+      "pages": [
+        "Capítulo 1: Había una vez en un lugar muy lejano...",
+        "Capítulo 2: Continuaron las aventuras de Juan...",
+        "Capítulo 3: El final de la historia se acercaba..."
+      ]
+    },
+    {
+      "id": 2,
+      "title": "El viaje de la imaginación",
+      "author": "Escritor Desconocido",
+      "pages": [
+        "Capítulo 1: La imaginación puede llevarte a lugares increíbles...",
+        "Capítulo 2: A medida que el viaje continuaba, las posibilidades parecían infinitas...",
+        "Capítulo 3: El fin de la aventura."
+      ]
+    }
+  ],
+
+  "users": [
+    {
+      "id": 1,
+      "first_name": "Álvaro",
+      "last_name": "Martínez",
+      "email": "hello@kuroikyu.com",
+      "password": "plaintext"
+    }
+  ],
+
+  "book_stats": [
+    {
+      "user_id": 1,
+      "book_id": 1,
+      "time_by_page": [
+        1200,
+        42987,
+        12322
+      ]
+    }
+  ]
+}
