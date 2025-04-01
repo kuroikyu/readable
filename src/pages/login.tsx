@@ -5,7 +5,7 @@ import { Button } from "../components/ui/button";
 import { Link } from "react-router";
 import { AlertCircle } from "lucide-react"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { loginUser } from "../store/authSlice";
 import { Alert, AlertDescription } from "../components/ui/alert";
@@ -76,6 +76,14 @@ const Login: FC = () => {
           </Button>
         </form>
       </CardContent>
+      <CardFooter className="flex justify-center border-t p-4">
+        <div className="text-sm text-gray-600">
+          Don't have an accont?{" "}
+          <Link to="/signup" className="text-blue-600 hover:text-blue-800">
+            Sign up
+          </Link>
+        </div>
+      </CardFooter>
     </Card>
   )
 }

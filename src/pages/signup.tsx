@@ -4,10 +4,11 @@ import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { AlertCircle } from "lucide-react"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { signupUser } from "../store/authSlice";
 import { Alert, AlertDescription } from "../components/ui/alert";
+import { Link } from "react-router";
 
 const Signup: FC = () => {
   const [email, setEmail] = useState('')
@@ -113,6 +114,14 @@ const Signup: FC = () => {
           </Button>
         </form>
       </CardContent>
+      <CardFooter className="flex justify-center border-t p-4">
+        <div className="text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 hover:text-blue-800">
+            Login
+          </Link>
+        </div>
+      </CardFooter>
     </Card>
   )
 }
