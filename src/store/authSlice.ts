@@ -50,6 +50,8 @@ const initialState: AuthState = {
   error: null,
 };
 
+const SERVER_HOSTNAME = "http://localhost:3000";
+
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (
@@ -57,7 +59,7 @@ export const loginUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await fetch("http://localhost:3000/users");
+      const response = await fetch(`${SERVER_HOSTNAME}/users`);
       const users = await response.json();
 
       if (!Array.isArray(users) || users.length === 0) {
@@ -114,7 +116,7 @@ export const signupUser = createAsyncThunk(
   ) => {
     try {
       const checkResponse = await fetch(
-        `http://localhost:3000/users?email=${email}`,
+        `${SERVER_HOSTNAME}/users?email=${email}`,
       );
       const existingUsers = await checkResponse.json();
 
@@ -122,7 +124,7 @@ export const signupUser = createAsyncThunk(
         return rejectWithValue("This email is aleady registered");
       }
 
-      const userResponse = await fetch("http://localhost:3000/users");
+      const userResponse = await fetch(`${SERVER_HOSTNAME}/users`);
       const users = await userResponse.json();
 
       if (!areUsers(users)) {
@@ -141,7 +143,7 @@ export const signupUser = createAsyncThunk(
         last_name: lastName,
       };
 
-      const createResponse = await fetch("http://localhost:3000/users", {
+      const createResponse = await fetch(`${SERVER_HOSTNAME}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
