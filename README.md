@@ -15,6 +15,8 @@ Your friendly neighborhood book reader.
 - [Vite (React)](https://vite.dev/)
 - [React Router](https://reactrouter.com/home)
 - [json-server](https://www.npmjs.com/package/json-server)
+- [TailwindCSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
 
 
 ## How to run
