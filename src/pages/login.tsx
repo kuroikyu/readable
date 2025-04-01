@@ -1,13 +1,39 @@
-import { FC, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AlertCircle } from "lucide-react"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { clearError, loginUser } from "../store/authSlice";
+import { Alert, AlertDescription } from "../components/ui/alert";
 
 const Login: FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const { isAuthenticated, loading, error } = useAppSelector(state => state.auth)
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/")
+    }
+
+    return () => {
+      // Clear errors once the user is authenticated
+      dispatch(clearError())
+    }
+  }, [isAuthenticated, navigate, dispatch])
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+
+    dispatch(loginUser({ email, password }))
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
@@ -17,7 +43,13 @@ const Login: FC = () => {
           <CardDescription>Enter your credentials to start reading</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="flex flex-col gap-y-4">
+          <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
             <div className="flex flex-col gap-y-2">
               <Label htmlFor="email">Email</Label>
@@ -52,11 +84,13 @@ const Login: FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Button type="submit">Login</Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Login"}
+            </Button>
           </form>
         </CardContent>
       </Card>
-    </div>
+    </div >
   )
 }
 

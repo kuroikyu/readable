@@ -3,7 +3,7 @@ Your friendly neighborhood book reader.
 
 
 ## Pages
-- [ ] /login
+- [x] /login
 - [ ] /signup
 - [ ] /books
 - [ ] /read?b=:id
@@ -17,6 +17,7 @@ Your friendly neighborhood book reader.
 - [json-server](https://www.npmjs.com/package/json-server)
 - [TailwindCSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
+- [redux](https://react-redux.js.org/)
 
 
 ## How to run

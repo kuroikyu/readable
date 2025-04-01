@@ -1,12 +1,16 @@
 import { Route, Routes } from 'react-router'
-import Login from './pages/login'
+import { Provider } from 'react-redux'
 
+import { store } from "./store"
+import Login from './pages/login'
 
 function App() {
   return (
-    <Routes>
-      <Route path='/login' element={<Login />} />
-    </Routes>
+    <Provider store={store}>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+      </Routes>
+    </Provider>
   )
 }
 
