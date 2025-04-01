@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
-  id: string;
+  id: number;
   email: string;
   password: string;
   first_name?: string;
@@ -96,6 +96,88 @@ export const loginUser = createAsyncThunk(
   },
 );
 
+export const signupUser = createAsyncThunk(
+  "auth/signup",
+  async (
+    {
+      email,
+      password,
+      firstName,
+      lastName,
+    }: {
+      email: string;
+      password: string;
+      firstName?: string;
+      lastName?: string;
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const checkResponse = await fetch(
+        `http://localhost:3000/users?email=${email}`,
+      );
+      const existingUsers = await checkResponse.json();
+
+      if (Array.isArray(existingUsers) && existingUsers.length > 0) {
+        return rejectWithValue("This email is aleady registered");
+      }
+
+      const userResponse = await fetch("http://localhost:3000/users");
+      const users = await userResponse.json();
+
+      if (!areUsers(users)) {
+        return rejectWithValue(
+          "The database contains invalid users. Please contact the administrator.",
+        );
+      }
+      const nextId =
+        users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
+
+      const newUser = {
+        id: nextId,
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      };
+
+      const createResponse = await fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (!createResponse.ok) {
+        return rejectWithValue("Failed to create account");
+      }
+
+      const user = await createResponse.json();
+
+      if (!isUser(user)) {
+        return rejectWithValue("Failed to create account");
+      }
+
+      // Don't try this at home
+      const token = `not-a-jwt-token-${user.id}-${Date.now()}`;
+
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+
+      return { user, token };
+    } catch (err) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      }
+      if (typeof err === "string") {
+        return rejectWithValue(err);
+      }
+      return rejectWithValue("An unknown error occurred.");
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -128,6 +210,25 @@ const authSlice = createSlice({
       (state, action: PayloadAction<{ user: User; token: string }>) => {
         state.loading = false;
         state.error = null;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isAuthenticated = true;
+      },
+    );
+
+    // Signup
+    builder.addCase(signupUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(signupUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(
+      signupUser.fulfilled,
+      (state, action: PayloadAction<{ user: User; token: string }>) => {
+        state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;

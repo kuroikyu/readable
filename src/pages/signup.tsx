@@ -7,7 +7,7 @@ import { AlertCircle } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { clearError } from "../store/authSlice";
+import { clearError, signupUser } from "../store/authSlice";
 import { Alert, AlertDescription } from "../components/ui/alert";
 
 const Signup: FC = () => {
@@ -43,8 +43,7 @@ const Signup: FC = () => {
       return;
     }
 
-    // TODO: create signup logic
-    //dispatch(loginUser({ email, password }))
+    dispatch(signupUser({ email, password, firstName, lastName }))
   }
 
   return (
