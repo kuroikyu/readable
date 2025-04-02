@@ -71,7 +71,7 @@ const Home: FC = () => {
                         {book.pages.length} chapters
                       </p>
                       <Button asChild className="mt-auto w-full">
-                        <Link to={`/read/b=${book.id}`}>Read Book</Link>
+                        <Link to={`/read?b=${book.id}`}>Read Book</Link>
                       </Button>
                     </CardContent>
                   </div>
