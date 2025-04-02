@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { BookOpen, Heart, LogOut, Menu, Star, User, X } from "lucide-react";
+import { BookOpen, Heart, LogOut, Menu, User, X } from "lucide-react";
 import { logout } from "../store/authSlice";
 
 const Navbar: FC = () => {
@@ -105,7 +105,9 @@ const Navbar: FC = () => {
           {user ? (
             <div className="border-t border-gray-200 pt-4 pb-3">
               <div className="px-4 py-2 text-gray-800">
-                <p className="text-base font-medium">{user.first_name} {user.last_name || ""}</p>
+                <p className="text-base font-medium">
+                  {user.first_name} {user.last_name || ""}
+                </p>
                 <p className="text-sm font-medium text-gray-500">
                   {user.email}
                 </p>
