@@ -1,14 +1,15 @@
 import { FC, FormEvent, useState } from "react";
-import { Label } from "../components/ui/label";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
 import { Link } from "react-router";
 import { AlertCircle } from "lucide-react"
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { loginUser } from "../store/authSlice";
-import { Alert, AlertDescription } from "../components/ui/alert";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { loginUser } from "@/store/authSlice";
+
 
 const Login: FC = () => {
   const [email, setEmail] = useState('')
