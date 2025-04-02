@@ -5,7 +5,7 @@ Your friendly neighborhood book reader.
 ## Pages
 - [x] /login
 - [x] /signup
-- [ ] /books
+- [x] / (just / but lists books)
 - [ ] /read?b=:id
 - [ ] /me
 - [ ] /me/stats
@@ -18,6 +18,7 @@ Your friendly neighborhood book reader.
 - [TailwindCSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [redux](https://react-redux.js.org/)
+- [Lucide](https://lucide.dev/)
 
 
 ## How to run

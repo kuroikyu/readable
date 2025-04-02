@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { useAppSelector } from "../store/hooks";
 import { Navigate, Outlet } from "react-router";
+
+import { useAppSelector } from "@/store/hooks";
 
 
 const AuthLayout: FC = () => {
