@@ -18,6 +18,7 @@ Your friendly neighborhood book reader.
 - [TailwindCSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [redux](https://react-redux.js.org/)
+- [Lucide](https://lucide.dev/)
 
 
 ## How to run
