@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) {
+  console.error(
+    "FATAL ERROR: VITE_API_BASE_URL environment variable is not set!",
+  );
+}
+
 interface User {
   id: number;
   email: string;
@@ -50,8 +58,6 @@ const initialState: AuthState = {
   error: null,
 };
 
-const SERVER_HOSTNAME = "http://localhost:3000";
-
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (
@@ -59,7 +65,7 @@ export const loginUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await fetch(`${SERVER_HOSTNAME}/users`);
+      const response = await fetch(`${API_BASE_URL}/users`);
       const users = await response.json();
 
       if (!Array.isArray(users) || users.length === 0) {
@@ -115,16 +121,14 @@ export const signupUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const checkResponse = await fetch(
-        `${SERVER_HOSTNAME}/users?email=${email}`,
-      );
+      const checkResponse = await fetch(`${API_BASE_URL}/users?email=${email}`);
       const existingUsers = await checkResponse.json();
 
       if (Array.isArray(existingUsers) && existingUsers.length > 0) {
         return rejectWithValue("This email is aleady registered");
       }
 
-      const userResponse = await fetch(`${SERVER_HOSTNAME}/users`);
+      const userResponse = await fetch(`${API_BASE_URL}/users`);
       const users = await userResponse.json();
 
       if (!areUsers(users)) {
@@ -143,7 +147,7 @@ export const signupUser = createAsyncThunk(
         last_name: lastName,
       };
 
-      const createResponse = await fetch(`${SERVER_HOSTNAME}/users`, {
+      const createResponse = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) {
+  console.error(
+    "FATAL ERROR: VITE_API_BASE_URL environment variable is not set!",
+  );
+}
+
 interface Book {
   id: number;
   title: string;
@@ -20,8 +28,6 @@ const initialState: BooksState = {
   loading: true,
   error: null,
 };
-
-const SERVER_HOSTNAME = "http://localhost:3000";
 
 function isBook(maybe: any): maybe is Book {
   return (
@@ -49,7 +55,7 @@ export const fetchBooks = createAsyncThunk(
   "books/fetchBooks",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${SERVER_HOSTNAME}/books`);
+      const response = await fetch(`${API_BASE_URL}/books`);
 
       if (!response.ok) {
         return rejectWithValue("Server error");
@@ -67,7 +73,12 @@ export const fetchBooks = createAsyncThunk(
         );
       }
 
-      return { books };
+      const processedBooks = books.map((book) => ({
+        ...book,
+        cover: `${API_BASE_URL}${book.cover}`,
+      }));
+
+      return { books: processedBooks };
     } catch (err) {
       if (err instanceof Error) {
         return rejectWithValue(err.message);
