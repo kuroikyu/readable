@@ -4,6 +4,8 @@
       "id": 1,
       "title": "Las aventuras de Juan",
       "author": "Autor Ficticio",
+      "description":"Había una vez en un lugar muy lejano, continuaron las aventuras de Juan, el final de la historia se acercaba.",
+      "cover": "/cover/las_aventuras_de_juan.jpeg",
       "pages": [
         "Capítulo 1: Había una vez en un lugar muy lejano...",
         "Capítulo 2: Continuaron las aventuras de Juan...",
@@ -14,6 +16,8 @@
       "id": 2,
       "title": "El viaje de la imaginación",
       "author": "Escritor Desconocido",
+      "description":"La imaginación puede llevarte a lugares increíbles, a medida que el viaje continuaba, las posibilidades parecían infinitas, el fin de la aventura.",
+      "cover": "/cover/el_viaje_de_la_imaginacion.jpeg",
       "pages": [
         "Capítulo 1: La imaginación puede llevarte a lugares increíbles...",
         "Capítulo 2: A medida que el viaje continuaba, las posibilidades parecían infinitas...",

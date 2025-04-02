@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "pnpx json-server ./server/readable-db.json"
+    "server": "pnpx json-server ./server/readable-db.json -s ./server/public"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.2",
