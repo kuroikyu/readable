@@ -5,7 +5,7 @@ Your friendly neighborhood book reader.
 ## Pages
 - [x] /login
 - [x] /signup
-- [ ] /books
+- [x] / (just / but lists books)
 - [ ] /read?b=:id
 - [ ] /me
 - [ ] /me/stats
