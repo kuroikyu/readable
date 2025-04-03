@@ -42,6 +42,29 @@ const Reader: FC = () => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyboardPagination = (event: KeyboardEvent) => {
+      switch (event.code) {
+        case "KeyL":
+        case "ArrowRight":
+          goToNextPage();
+          break;
+        case "KeyH":
+        case "ArrowLeft":
+          goToPreviousPage();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyboardPagination);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyboardPagination);
+    };
+  }, [currentPage, activeBook]);
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
