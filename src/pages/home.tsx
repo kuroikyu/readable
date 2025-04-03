@@ -68,7 +68,7 @@ const Home: FC = () => {
                       </p>
                       <p className="flex items-center gap-x-2 text-sm text-gray-500">
                         <List className="h-4 w-4" />
-                        {book.pages.length} chapters
+                        {book.noOfPages} pages
                       </p>
                       <Button asChild className="mt-auto w-full">
                         <Link to={`/read?b=${book.id}`}>Read Book</Link>

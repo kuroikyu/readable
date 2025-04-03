@@ -8,28 +8,37 @@ if (!API_BASE_URL) {
   );
 }
 
-interface Book {
+interface BaseBook {
   id: number;
   title: string;
   author: string;
   description: string;
   cover: string;
+}
+
+interface BookWithPages extends BaseBook {
   pages: string[];
 }
 
+interface BookOverview extends BaseBook {
+  noOfPages: number;
+}
+
 interface BooksState {
-  books: Book[] | null;
+  books: BookOverview[] | null;
+  activeBook: BookWithPages | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: BooksState = {
   books: [],
+  activeBook: null,
   loading: true,
   error: null,
 };
 
-function isBook(maybe: any): maybe is Book {
+function isBookWithPages(maybe: any): maybe is BookWithPages {
   return (
     maybe &&
     typeof maybe === "object" &&
@@ -42,12 +51,12 @@ function isBook(maybe: any): maybe is Book {
   );
 }
 
-function areBooks(maybe: any): maybe is Book[] {
+function areBooksWithPages(maybe: any): maybe is BookWithPages[] {
   return (
     maybe &&
     typeof maybe === "object" &&
     Array.isArray(maybe) &&
-    maybe.every(isBook)
+    maybe.every(isBookWithPages)
   );
 }
 
@@ -67,18 +76,54 @@ export const fetchBooks = createAsyncThunk(
         return rejectWithValue("Could not retrieve books from the database.");
       }
 
-      if (!areBooks(books)) {
+      if (!areBooksWithPages(books)) {
         return rejectWithValue(
           "The database contains invalid books. Please contact the administrator.",
         );
       }
 
-      const processedBooks = books.map((book) => ({
-        ...book,
+      // NOTE: this is so we can drop `pages` and return it only when we fetch a single book
+      const processedBooks: BookOverview[] = books.map((book) => ({
+        id: book.id,
+        author: book.author,
+        description: book.author,
+        title: book.title,
+        noOfPages: book.pages.length,
         cover: `${API_BASE_URL}${book.cover}`,
       }));
 
       return { books: processedBooks };
+    } catch (err) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      }
+      if (typeof err === "string") {
+        return rejectWithValue(err);
+      }
+      return rejectWithValue("An unknown error occurred.");
+    }
+  },
+);
+
+export const fetchBookById = createAsyncThunk(
+  "books/fetchBookById",
+  async (bookId: number, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/books/${bookId}`);
+
+      if (!response.ok) {
+        return rejectWithValue("Book not found");
+      }
+
+      const book = await response.json();
+
+      if (!isBookWithPages(book)) {
+        return rejectWithValue(
+          "This book is invalid. Please contact the administrator.",
+        );
+      }
+
+      return { book };
     } catch (err) {
       if (err instanceof Error) {
         return rejectWithValue(err.message);
@@ -100,6 +145,7 @@ const bookSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // fetchBooks
     builder.addCase(fetchBooks.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -110,10 +156,29 @@ const bookSlice = createSlice({
     });
     builder.addCase(
       fetchBooks.fulfilled,
-      (state, action: PayloadAction<{ books: Book[] }>) => {
+      (state, action: PayloadAction<{ books: BookOverview[] }>) => {
         state.loading = false;
         state.error = null;
         state.books = action.payload.books;
+      },
+    );
+
+    // fetchBookById
+
+    builder.addCase(fetchBookById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchBookById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(
+      fetchBookById.fulfilled,
+      (state, action: PayloadAction<{ book: BookWithPages }>) => {
+        state.loading = false;
+        state.error = null;
+        state.activeBook = action.payload.book;
       },
     );
   },
