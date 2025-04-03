@@ -64,7 +64,7 @@ const Home: FC = () => {
                     </CardHeader>
                     <CardContent className="mt-4 flex flex-1 flex-col justify-between gap-4">
                       <p className="flex grow gap-x-2 text-xs text-gray-500">
-                        {book.description}
+                        {book.blurb}
                       </p>
                       <p className="flex items-center gap-x-2 text-sm text-gray-500">
                         <List className="h-4 w-4" />

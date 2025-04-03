@@ -12,7 +12,7 @@ interface BaseBook {
   id: number;
   title: string;
   author: string;
-  description: string;
+  blurb: string;
   cover: string;
 }
 
@@ -45,7 +45,7 @@ function isBookWithPages(maybe: any): maybe is BookWithPages {
     "id" in maybe &&
     "title" in maybe &&
     "author" in maybe &&
-    "description" in maybe &&
+    "blurb" in maybe &&
     "cover" in maybe &&
     "pages" in maybe
   );
@@ -86,7 +86,7 @@ export const fetchBooks = createAsyncThunk(
       const processedBooks: BookOverview[] = books.map((book) => ({
         id: book.id,
         author: book.author,
-        description: book.author,
+        blurb: book.blurb,
         title: book.title,
         noOfPages: book.pages.length,
         cover: `${API_BASE_URL}${book.cover}`,
