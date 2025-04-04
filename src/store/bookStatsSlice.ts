@@ -168,15 +168,17 @@ const bookStatsSlice = createSlice({
 
     // newUpdateStats
     builder.addCase(updateBookStats.fulfilled, (state, action) => {
-      state.bookStats = state.bookStats.map((bookStats) => {
-        if (
-          bookStats.book_id === action.payload.bookStats.book_id &&
-          bookStats.user_id === action.payload.bookStats.user_id
-        ) {
-          return action.payload.bookStats;
-        }
-        return bookStats;
-      });
+      const newBookStats = state.bookStats.filter(
+        (bookStats) =>
+          !(
+            bookStats.book_id.toString() ===
+              action.payload.bookStats.book_id.toString() &&
+            bookStats.user_id.toString() ===
+              action.payload.bookStats.user_id.toString()
+          ),
+      );
+      newBookStats.push(action.payload.bookStats);
+      state.bookStats = newBookStats;
     });
   },
 });
