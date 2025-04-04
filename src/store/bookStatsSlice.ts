@@ -24,7 +24,7 @@ const initialState: BookStatsState = {
 
 export const fetchBookStatsByUser = createAsyncThunk(
   "bookStats/fetchBookStatsByUser",
-  async (userId: number, { rejectWithValue }) => {
+  async (userId: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `${API_BASE_URL}/book_stats?user_id=${userId}`,
@@ -59,8 +59,8 @@ export const updateBookStats = createAsyncThunk(
       pageNumber,
       timeSpentInMs,
     }: {
-      userId: number;
-      bookId: number;
+      userId: string;
+      bookId: string;
       pageNumber: number;
       timeSpentInMs: number;
     },

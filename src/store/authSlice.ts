@@ -9,7 +9,7 @@ if (!API_BASE_URL) {
 }
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   password: string;
   first_name?: string;
@@ -24,9 +24,9 @@ interface AuthState {
   error: string | null;
 }
 
-function isUser(maybe: any): maybe is User {
+function isUser(maybe: unknown): maybe is User {
   return (
-    maybe &&
+    !!maybe &&
     typeof maybe === "object" &&
     "id" in maybe &&
     "email" in maybe &&
@@ -34,7 +34,7 @@ function isUser(maybe: any): maybe is User {
   );
 }
 
-function areUsers(maybe: any[]): maybe is User[] {
+function areUsers(maybe: unknown[]): maybe is User[] {
   return maybe.every((el) => isUser(el));
 }
 
@@ -43,7 +43,8 @@ function getUserFromStorage(): User | null {
   if (userString) {
     try {
       return JSON.parse(userString);
-    } catch (e) {
+    } catch (err) {
+      console.error("Error retrieving the user from localStorage:", err);
       return null;
     }
   }

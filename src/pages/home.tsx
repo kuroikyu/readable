@@ -19,7 +19,7 @@ const Home: FC = () => {
 
   useEffect(() => {
     dispatch(fetchBooks());
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return (

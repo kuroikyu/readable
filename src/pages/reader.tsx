@@ -29,7 +29,7 @@ const Reader: FC = () => {
       dispatch(
         updateBookStats({
           userId: user.id,
-          bookId: parseInt(bookId, 10),
+          bookId: bookId,
           pageNumber: lastPageRef.current,
           timeSpentInMs,
         }),
@@ -39,7 +39,7 @@ const Reader: FC = () => {
 
   useEffect(() => {
     if (bookId && user) {
-      dispatch(fetchBookById(parseInt(bookId, 10)));
+      dispatch(fetchBookById(bookId));
     }
     startTimeRef.current = Date.now();
 

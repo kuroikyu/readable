@@ -1,5 +1,5 @@
 export interface BaseBook {
-  id: number;
+  id: string;
   title: string;
   author: string;
   blurb: string;
@@ -16,18 +16,14 @@ export interface BookOverview extends BaseBook {
 
 export interface BookStats {
   id: string;
-  user_id: number;
-  book_id: number;
-  time_by_page: {
-    page: number;
-    timeInMs: number;
-  }[];
+  user_id: string;
+  book_id: string;
   page_time: Record<string, number>;
 }
 
-export function isBookWithPages(maybe: any): maybe is BookWithPages {
+export function isBookWithPages(maybe: unknown): maybe is BookWithPages {
   return (
-    maybe &&
+    !!maybe &&
     typeof maybe === "object" &&
     "id" in maybe &&
     "title" in maybe &&
@@ -38,9 +34,9 @@ export function isBookWithPages(maybe: any): maybe is BookWithPages {
   );
 }
 
-export function areBooksWithPages(maybe: any): maybe is BookWithPages[] {
+export function areBooksWithPages(maybe: unknown): maybe is BookWithPages[] {
   return (
-    maybe &&
+    !!maybe &&
     typeof maybe === "object" &&
     Array.isArray(maybe) &&
     maybe.every(isBookWithPages)

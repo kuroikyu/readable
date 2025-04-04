@@ -75,7 +75,7 @@ export const fetchBooks = createAsyncThunk(
 
 export const fetchBookById = createAsyncThunk(
   "books/fetchBookById",
-  async (bookId: number, { rejectWithValue }) => {
+  async (bookId: string, { rejectWithValue }) => {
     try {
       const response = await fetch(`${API_BASE_URL}/books/${bookId}`);
 
