@@ -18,8 +18,10 @@ const Home: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchBooks());
-  }, []);
+    if (!books || books.length === 0) {
+      dispatch(fetchBooks());
+    }
+  }, [dispatch]);
 
   if (loading) {
     return (
@@ -64,14 +66,14 @@ const Home: FC = () => {
                     </CardHeader>
                     <CardContent className="mt-4 flex flex-1 flex-col justify-between gap-4">
                       <p className="flex grow gap-x-2 text-xs text-gray-500">
-                        {book.description}
+                        {book.blurb}
                       </p>
                       <p className="flex items-center gap-x-2 text-sm text-gray-500">
                         <List className="h-4 w-4" />
-                        {book.pages.length} chapters
+                        {book.noOfPages} pages
                       </p>
                       <Button asChild className="mt-auto w-full">
-                        <Link to={`/read/b=${book.id}`}>Read Book</Link>
+                        <Link to={`/read?b=${book.id}`}>Read Book</Link>
                       </Button>
                     </CardContent>
                   </div>

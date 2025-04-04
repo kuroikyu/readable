@@ -7,6 +7,10 @@ import Signup from "./pages/signup";
 import AuthLayout from "./layouts/AuthLayout";
 import Home from "./pages/home";
 import MainLayout from "./layouts/MainLayout";
+import ReaderLayout from "./layouts/ReaderLayout";
+import Reader from "./pages/reader";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ReaderStats from "./pages/readerStats";
 
 function App() {
   return (
@@ -18,6 +22,24 @@ function App() {
         </Route>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+        </Route>
+        <Route element={<ReaderLayout />}>
+          <Route
+            path="/read"
+            element={
+              <ProtectedRoute>
+                <Reader />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/read/stats"
+            element={
+              <ProtectedRoute>
+                <ReaderStats />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </Provider>

@@ -1,4 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  areBooksWithPages,
+  BookOverview,
+  BookWithPages,
+  isBookWithPages,
+} from "./types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -8,48 +14,19 @@ if (!API_BASE_URL) {
   );
 }
 
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  description: string;
-  cover: string;
-  pages: string[];
-}
-
-interface BooksState {
-  books: Book[] | null;
+export interface BooksState {
+  books: BookOverview[] | null;
+  activeBook: BookWithPages | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: BooksState = {
   books: [],
+  activeBook: null,
   loading: true,
   error: null,
 };
-
-function isBook(maybe: any): maybe is Book {
-  return (
-    maybe &&
-    typeof maybe === "object" &&
-    "id" in maybe &&
-    "title" in maybe &&
-    "author" in maybe &&
-    "description" in maybe &&
-    "cover" in maybe &&
-    "pages" in maybe
-  );
-}
-
-function areBooks(maybe: any): maybe is Book[] {
-  return (
-    maybe &&
-    typeof maybe === "object" &&
-    Array.isArray(maybe) &&
-    maybe.every(isBook)
-  );
-}
 
 export const fetchBooks = createAsyncThunk(
   "books/fetchBooks",
@@ -67,18 +44,54 @@ export const fetchBooks = createAsyncThunk(
         return rejectWithValue("Could not retrieve books from the database.");
       }
 
-      if (!areBooks(books)) {
+      if (!areBooksWithPages(books)) {
         return rejectWithValue(
           "The database contains invalid books. Please contact the administrator.",
         );
       }
 
-      const processedBooks = books.map((book) => ({
-        ...book,
+      // NOTE: this is so we can drop `pages` and return it only when we fetch a single book
+      const processedBooks: BookOverview[] = books.map((book) => ({
+        id: book.id,
+        author: book.author,
+        blurb: book.blurb,
+        title: book.title,
+        noOfPages: book.pages.length,
         cover: `${API_BASE_URL}${book.cover}`,
       }));
 
       return { books: processedBooks };
+    } catch (err) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      }
+      if (typeof err === "string") {
+        return rejectWithValue(err);
+      }
+      return rejectWithValue("An unknown error occurred.");
+    }
+  },
+);
+
+export const fetchBookById = createAsyncThunk(
+  "books/fetchBookById",
+  async (bookId: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/books/${bookId}`);
+
+      if (!response.ok) {
+        return rejectWithValue("Book not found");
+      }
+
+      const book = await response.json();
+
+      if (!isBookWithPages(book)) {
+        return rejectWithValue(
+          "This book is invalid. Please contact the administrator.",
+        );
+      }
+
+      return { book };
     } catch (err) {
       if (err instanceof Error) {
         return rejectWithValue(err.message);
@@ -100,6 +113,7 @@ const bookSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // fetchBooks
     builder.addCase(fetchBooks.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -110,10 +124,28 @@ const bookSlice = createSlice({
     });
     builder.addCase(
       fetchBooks.fulfilled,
-      (state, action: PayloadAction<{ books: Book[] }>) => {
+      (state, action: PayloadAction<{ books: BookOverview[] }>) => {
         state.loading = false;
         state.error = null;
         state.books = action.payload.books;
+      },
+    );
+
+    // fetchBookById
+    builder.addCase(fetchBookById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchBookById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(
+      fetchBookById.fulfilled,
+      (state, action: PayloadAction<{ book: BookWithPages }>) => {
+        state.loading = false;
+        state.error = null;
+        state.activeBook = action.payload.book;
       },
     );
   },
