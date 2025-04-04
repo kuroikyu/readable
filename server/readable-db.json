@@ -1,12 +1,12 @@
 {
   "books": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Finnegan's Fable Tail",
       "author": "Anya Meadowsweet",
       "blurb": "When the music of Whispering Pines vanishes, Finnegan the storytelling fox embarks on a magical quest to restore harmony.",
       "cover": "/cover/finnegans_fable_tail.jpeg",
-      "pages": [ 
+      "pages": [
         "## Chapter 1: The Silent Glade\nThe sun, usually a warm, golden friend, seemed to hold its breath over Whispering Pines. It wasn't just the lack of birdsong, or the stillness of the leaves that usually rustled with playful breezes. It was the silence itself, a thick, heavy blanket that smothered the very heart of the glade.\n\nFinnegan, a fox with fur the color of burnt caramel and eyes like polished amber, felt a chill crawl down his spine. He was no ordinary fox; Finnegan was a storyteller, his voice a melody that wove tales of bravery, kindness, and the magic hidden in every dewdrop and sunbeam. Whispering Pines was his home, a place where the air vibrated with stories and songs, where the very trees seemed to hum along to his narratives. But today, the hum was gone.\n\nHe padded through the silent woods, his paws barely making a sound on the mossy ground. Usually, the glade was alive with the music of the forest creatures. The squirrels chattered their busy gossip, the rabbits thumped their rhythmic warnings, and the owls hooted their wise, low melodies. But now, nothing.\n\nFinnegan stopped by the ancient oak, its gnarled branches reaching towards the sky like the arms of a wise old giant.",
         "This oak was the heart of Whispering Pines, the place where all the stories were born. He placed a paw on its rough bark, feeling for the familiar thrum of magic. But the oak was silent, its energy as still as a frozen pond.\n\n\"What has happened?\" Finnegan whispered, his voice barely audible in the heavy silence. He looked around, his amber eyes searching for any sign of life, any clue to the sudden stillness.\n\nHe remembered the old tales, the legends whispered by the elders of Whispering Pines. They spoke of a time when the music of the glade had faded, when a shadow had fallen over the land. But those were just stories, weren't they? Tales to make young foxes shiver with delightful fear around a campfire.\n\nA flutter of movement caught his eye. A small, trembling butterfly, its wings a dull, faded blue, landed on a withered flower. It usually had bright colours, and was always surrounded by many more butterflies.\n\n\"Little one, what's wrong?\" Finnegan asked gently, his voice soft as a summer breeze.\n\nThe butterfly trembled, its antennae twitching. \"The music... it's gone,\" it whispered, its voice barely a breath.",
         "\"The Harmony Weaver... she's silent.\"\n\nThe Harmony Weaver! Finnegan's heart pounded. She was the guardian of Whispering Pines, the one who wove the magic of the glade into a symphony of life. Her song was the heartbeat of the forest, the melody that kept everything in balance. If she was silent, it meant something terrible had happened.\n\nFinnegan knew he had to act. He couldn't let the silence consume Whispering Pines. He had to find the Harmony Weaver and restore her song. But where to start? The glade was vast, and the silence was a heavy fog, obscuring everything.\n\nHe looked up at the sky, where the sun hung motionless, as if waiting for an answer. He remembered a story his grandmother had told him, a tale of a hidden path, a secret trail that led to the heart of the glade.\n\n\"The Whispering River,\" he murmured, his voice gaining a hint of determination. \"It's said to hold the echoes of all the songs of Whispering Pines.\"\n\nHe turned and headed towards the river, his paws moving with a newfound purpose. The silence was still heavy, but a spark of hope flickered in his heart. He was Finnegan, the storyteller, and he wouldn't let the music of Whispering Pines die. He would find the Harmony Weaver, and he would restore her song, no matter what it took. The adventure had begun.",
@@ -33,10 +33,10 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "The Witch's Secret Journal",
       "author": "Elara Moon",
-      "blurb": "Lila never imagined she was a witch until a mysterious journal from her grandmother unlocked a world of hidden magic.", 
+      "blurb": "Lila never imagined she was a witch until a mysterious journal from her grandmother unlocked a world of hidden magic.",
       "cover": "/cover/the_wich_s_secret_journal.jpeg",
       "pages": [
         "## Chapter 1: The Mysterious Journal\nLila Brightmoon had always felt a little different. Her bright, green eyes could spot things others missed, and the wind always seemed to whisper secrets to her. But it wasn’t until the day her grandmother, who had been gone for years, left her a mysterious, old journal that Lila’s world changed forever.\n\nWhen Lila opened the leather-bound book, the pages were filled with strange symbols, and it smelled of pine and something... ancient. That night, the journal glowed faintly in the dark. Little did Lila know, this was the first sign of her true nature. She was a witch.\n\nThe next morning, Lila couldn't shake the feeling that the journal was watching her. She ran her fingers over the strange markings, half-expecting them to move. When she finally mustered the courage to read aloud one of the words, the ink shimmered, and a small gust of wind ruffled her hair. She gasped, nearly dropping the book. Was it possible that this journal held real magic? And if so, why had her grandmother given it to her now?\n\nDetermined to find answers, she tucked the journal under her arm and rushed downstairs. Her parents were already busy with morning chores, and she hesitated. Should she tell them? No, something told her she needed to keep this secret—at least for now. Instead, she decided to seek out the one person in town who might know something about it: Old Ezra, the village storyteller.\n\nEzra’s house was perched on the edge of the village, surrounded by ancient oak trees and an overgrown garden that seemed to have a mind of its own. Lila knocked tentatively, and the door creaked open on its own. Inside, shelves overflowed with books, scrolls, and trinkets of every kind.\n\nEzra, an elderly man with sharp, knowing eyes, looked up from an old tome. \"Ah, Lila Brightmoon,\" he said, his voice like rustling leaves. \"I've been expecting you.\"",
@@ -48,26 +48,58 @@
       ]
     }
   ],
-
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "first_name": "Álvaro",
       "last_name": "Martínez",
       "email": "hello@kuroikyu.com",
       "password": "plaintext"
     }
   ],
-
   "book_stats": [
     {
-      "user_id": 1,
+      "id": "6a99",
       "book_id": 1,
-      "time_by_page": [
-        1200,
-        42987,
-        12322
-      ]
+      "user_id": 1,
+      "page_time": {
+        "0": 453451,
+        "1": 55292,
+        "2": 51843,
+        "3": 132141,
+        "4": 93383,
+        "5": 101309,
+        "6": 73745,
+        "7": 66472,
+        "8": 58145,
+        "9": 68400,
+        "10": 59131,
+        "11": 104357,
+        "12": 104993,
+        "13": 60547,
+        "14": 60746,
+        "15": 55466,
+        "16": 87006,
+        "17": 91821,
+        "18": 103565,
+        "19": 193064,
+        "20": 112024,
+        "21": 263163,
+        "22": 171732
+      }
+    },
+    {
+      "id": "bdbf",
+      "book_id": 2,
+      "user_id": 1,
+      "page_time": {
+        "0": 2441,
+        "1": 3383,
+        "2": 4473,
+        "3": 1975,
+        "4": 2214,
+        "5": 4419
+      }
     }
   ]
 }

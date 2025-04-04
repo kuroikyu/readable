@@ -1,33 +1,60 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { marked } from "marked";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { fetchBookById } from "@/store/booksSlice";
+import { updateBookStats } from "@/store/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Reader: FC = () => {
-  const dispatch = useAppDispatch();
-  const { activeBook, loading, error } = useAppSelector((state) => state.books);
-  const { user } = useAppSelector((state) => state.auth);
   const [searchParams] = useSearchParams();
   const bookId = searchParams.get("b");
+
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const activeBook = useAppSelector((state) => state.books.activeBook);
+  const loading = useAppSelector((state) => state.books.loading);
+  const error = useAppSelector((state) => state.books.error);
+
   const [currentPage, setCurrentPage] = useState(0);
+  const lastPageRef = useRef(0);
+  const startTimeRef = useRef(Date.now());
+
+  const updateReadingStats = () => {
+    if (user && bookId && currentPage >= 0) {
+      const timeSpentInMs = Math.floor(Date.now() - startTimeRef.current);
+      dispatch(
+        updateBookStats({
+          userId: user.id,
+          bookId: parseInt(bookId, 10),
+          pageNumber: lastPageRef.current,
+          timeSpentInMs,
+        }),
+      );
+    }
+  };
 
   useEffect(() => {
-    if (bookId) {
+    if (bookId && user) {
       dispatch(fetchBookById(parseInt(bookId, 10)));
     }
+    startTimeRef.current = Date.now();
+
+    return () => {
+      updateReadingStats();
+    };
   }, [dispatch, user, bookId]);
 
   const changePage = (newPage: number) => {
-    if (user && bookId && currentPage >= 0) {
-      setCurrentPage(newPage);
-      // Scroll to the top of the page on page change
-      window.scrollTo(0, 0);
-    }
+    updateReadingStats();
+    setCurrentPage(newPage);
+    lastPageRef.current = newPage;
+    startTimeRef.current = Date.now();
+    // Scroll to the top of the page on page change
+    window.scrollTo(0, 0);
   };
 
   const goToPreviousPage = () => {
@@ -83,6 +110,7 @@ const Reader: FC = () => {
       </div>
     );
   }
+
   return (
     <div className="min-h-screen bg-gray-50 px-6 pt-6 md:p-6">
       <div className="mx-auto max-w-3xl">
