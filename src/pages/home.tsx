@@ -18,7 +18,9 @@ const Home: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchBooks());
+    if (!books || books.length === 0) {
+      dispatch(fetchBooks());
+    }
   }, [dispatch]);
 
   if (loading) {

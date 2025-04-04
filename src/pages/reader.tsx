@@ -38,7 +38,7 @@ const Reader: FC = () => {
   };
 
   useEffect(() => {
-    if (bookId && user) {
+    if (bookId && user && (!activeBook || activeBook.id !== bookId)) {
       dispatch(fetchBookById(bookId));
     }
     startTimeRef.current = Date.now();
