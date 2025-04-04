@@ -10,6 +10,7 @@ import MainLayout from "./layouts/MainLayout";
 import ReaderLayout from "./layouts/ReaderLayout";
 import Reader from "./pages/reader";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ReaderStats from "./pages/readerStats";
 
 function App() {
   return (
@@ -28,6 +29,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Reader />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/read/stats"
+            element={
+              <ProtectedRoute>
+                <ReaderStats />
               </ProtectedRoute>
             }
           />
