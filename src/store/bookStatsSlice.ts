@@ -82,10 +82,15 @@ export const updateBookStats = createAsyncThunk(
       existingStats.length > 0
     ) {
       const currentData = getState() as RootState;
+      // FIXME: userId is number?
       const bookStats = currentData.bookStats.bookStats.find((stat) => {
-        return stat.book_id === bookId && stat.user_id === userId;
+        return (
+          stat.book_id.toString() === bookId.toString() &&
+          stat.user_id.toString() === userId.toString()
+        );
       });
-      const previousTimeSpent = bookStats?.page_time[pageNumber] || 0;
+      const previousTimeSpent =
+        bookStats?.page_time[pageNumber.toString()] || 0;
 
       const patchResponse = await fetch(
         `${API_BASE_URL}/book_stats/${existingStats[0].id}`,
@@ -97,7 +102,7 @@ export const updateBookStats = createAsyncThunk(
           body: JSON.stringify({
             page_time: {
               ...(bookStats?.page_time || {}),
-              [pageNumber]: timeSpentInMs + previousTimeSpent,
+              [pageNumber.toString()]: timeSpentInMs + previousTimeSpent,
             },
           }),
         },
@@ -116,10 +121,10 @@ export const updateBookStats = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          book_id: bookId,
-          user_id: userId,
+          book_id: bookId.toString(),
+          user_id: userId.toString(),
           page_time: {
-            [pageNumber]: timeSpentInMs,
+            [pageNumber.toString()]: timeSpentInMs,
           },
         }),
       });
