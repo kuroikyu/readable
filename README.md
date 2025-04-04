@@ -6,9 +6,8 @@ Your friendly neighborhood book reader.
 - [x] /login
 - [x] /signup
 - [x] / (just / but lists books)
-- [ ] /read?b=:id
-- [ ] /me
-- [ ] /me/stats
+- [x] /read?b=:id
+- [x] /read/stats?b=:id
 
 
 ## Tools
