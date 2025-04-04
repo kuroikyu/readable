@@ -1,4 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  areBooksWithPages,
+  BookOverview,
+  BookWithPages,
+  isBookWithPages,
+} from "./types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -8,23 +14,7 @@ if (!API_BASE_URL) {
   );
 }
 
-interface BaseBook {
-  id: number;
-  title: string;
-  author: string;
-  blurb: string;
-  cover: string;
-}
-
-interface BookWithPages extends BaseBook {
-  pages: string[];
-}
-
-interface BookOverview extends BaseBook {
-  noOfPages: number;
-}
-
-interface BooksState {
+export interface BooksState {
   books: BookOverview[] | null;
   activeBook: BookWithPages | null;
   loading: boolean;
@@ -37,28 +27,6 @@ const initialState: BooksState = {
   loading: true,
   error: null,
 };
-
-function isBookWithPages(maybe: any): maybe is BookWithPages {
-  return (
-    maybe &&
-    typeof maybe === "object" &&
-    "id" in maybe &&
-    "title" in maybe &&
-    "author" in maybe &&
-    "blurb" in maybe &&
-    "cover" in maybe &&
-    "pages" in maybe
-  );
-}
-
-function areBooksWithPages(maybe: any): maybe is BookWithPages[] {
-  return (
-    maybe &&
-    typeof maybe === "object" &&
-    Array.isArray(maybe) &&
-    maybe.every(isBookWithPages)
-  );
-}
 
 export const fetchBooks = createAsyncThunk(
   "books/fetchBooks",
@@ -164,7 +132,6 @@ const bookSlice = createSlice({
     );
 
     // fetchBookById
-
     builder.addCase(fetchBookById.pending, (state) => {
       state.loading = true;
       state.error = null;
