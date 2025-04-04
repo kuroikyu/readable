@@ -108,9 +108,7 @@ const Navbar: FC = () => {
                 <p className="text-base font-medium">
                   {user.first_name} {user.last_name || ""}
                 </p>
-                <p className="text-sm font-medium text-gray-500">
-                  {user.email}
-                </p>
+                <p className="text-sm font-medium text-gray-500">{user.id}</p>
               </div>
               <div className="mt-3 space-y-1">
                 <Link

@@ -10,7 +10,6 @@ if (!API_BASE_URL) {
 
 interface User {
   id: string;
-  email: string;
   password: string;
   first_name?: string;
   last_name?: string;
@@ -26,11 +25,7 @@ interface AuthState {
 
 function isUser(maybe: unknown): maybe is User {
   return (
-    !!maybe &&
-    typeof maybe === "object" &&
-    "id" in maybe &&
-    "email" in maybe &&
-    "password" in maybe
+    !!maybe && typeof maybe === "object" && "id" in maybe && "password" in maybe
   );
 }
 
@@ -62,7 +57,7 @@ const initialState: AuthState = {
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (
-    { email, password }: { email: string; password: string },
+    { userId, password }: { userId: string; password: string },
     { rejectWithValue },
   ) => {
     try {
@@ -79,14 +74,14 @@ export const loginUser = createAsyncThunk(
       }
 
       const user = users.find(
-        (user) => user.email === email && user.password === password,
+        (user) => user.id === userId && user.password === password,
       );
 
       if (!user) {
         return rejectWithValue("Invalid credentials.");
       }
 
-      // Don't try this at home
+      // WARN: Don't try this at home
       const token = `not-a-jwt-token-${user.id}-${Date.now()}`;
 
       localStorage.setItem("user", JSON.stringify(user));
@@ -109,12 +104,12 @@ export const signupUser = createAsyncThunk(
   "auth/signup",
   async (
     {
-      email,
+      userId,
       password,
       firstName,
       lastName,
     }: {
-      email: string;
+      userId: string;
       password: string;
       firstName?: string;
       lastName?: string;
@@ -122,11 +117,11 @@ export const signupUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const checkResponse = await fetch(`${API_BASE_URL}/users?email=${email}`);
+      const checkResponse = await fetch(`${API_BASE_URL}/users?id=${userId}`);
       const existingUsers = await checkResponse.json();
 
       if (Array.isArray(existingUsers) && existingUsers.length > 0) {
-        return rejectWithValue("This email is aleady registered");
+        return rejectWithValue("This user ID is aleady registered");
       }
 
       const userResponse = await fetch(`${API_BASE_URL}/users`);
@@ -137,12 +132,9 @@ export const signupUser = createAsyncThunk(
           "The database contains invalid users. Please contact the administrator.",
         );
       }
-      const nextId =
-        users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
 
       const newUser = {
-        id: nextId,
-        email,
+        id: userId,
         password,
         first_name: firstName,
         last_name: lastName,

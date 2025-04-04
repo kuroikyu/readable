@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { loginUser } from "@/store/authSlice";
 
 const Login: FC = () => {
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ const Login: FC = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ userId, password }));
   };
 
   return (
@@ -48,15 +48,15 @@ const Login: FC = () => {
           )}
 
           <div className="flex flex-col gap-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="userId">User ID</Label>
             <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="steve@example.com"
+              id="userId"
+              name="userId"
+              type="text"
+              placeholder="steve879"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
             />
           </div>
 
