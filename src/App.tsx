@@ -9,7 +9,6 @@ import Home from "./pages/home";
 import MainLayout from "./layouts/MainLayout";
 import ReaderLayout from "./layouts/ReaderLayout";
 import Reader from "./pages/reader";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ReaderStats from "./pages/readerStats";
 import { TooltipProvider } from "./components/ui/tooltip";
 
@@ -25,23 +24,10 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
           </Route>
-          <Route element={<ReaderLayout />}>
-            <Route
-              path="/read"
-              element={
-                <ProtectedRoute>
-                  <Reader />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/read/stats"
-              element={
-                <ProtectedRoute>
-                  <ReaderStats />
-                </ProtectedRoute>
-              }
-            />
+
+          <Route path="/read" element={<ReaderLayout />}>
+            <Route index element={<Reader />} />
+            <Route path="stats" element={<ReaderStats />} />
           </Route>
         </Routes>
       </TooltipProvider>
