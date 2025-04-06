@@ -5,11 +5,12 @@ import { fetchBookStatsByUser } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { X } from "lucide-react";
 import { FC, useEffect } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 
 const ReaderStats: FC = () => {
   const [searchParams] = useSearchParams();
   const bookId = searchParams.get("b");
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
@@ -32,6 +33,24 @@ const ReaderStats: FC = () => {
       dispatch(fetchBookStatsByUser({ userId: user.id, authToken }));
     }
   }, [dispatch, bookId, user, authToken, activeBook]);
+
+  useEffect(() => {
+    const handleKeyboardPagination = (event: KeyboardEvent) => {
+      switch (event.code) {
+        case "Escape":
+          navigate("/");
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyboardPagination);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyboardPagination);
+    };
+  }, [activeBook]);
 
   if (bookLoading || bookStatsLoading) {
     return (

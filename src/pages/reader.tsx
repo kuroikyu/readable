@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { FC, useEffect, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { marked } from "marked";
 
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 const Reader: FC = () => {
   const [searchParams] = useSearchParams();
   const bookId = searchParams.get("b");
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
@@ -81,6 +82,12 @@ const Reader: FC = () => {
         case "KeyH":
         case "ArrowLeft":
           goToPreviousPage();
+          break;
+        case "Escape":
+          navigate({
+            pathname: "stats",
+            search: `?b=${bookId}`,
+          });
           break;
         default:
           break;
