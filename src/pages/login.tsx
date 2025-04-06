@@ -60,16 +60,8 @@ const Login: FC = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
-              <Link
-                to="/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-800"
-              >
-                Forgot password?
-              </Link>
-            </div>
+          <div className="relative flex flex-col gap-y-2">
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               name="password"
@@ -79,6 +71,12 @@ const Login: FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Link
+              to="/forgot-password"
+              className="absolute top-0 right-0 float-right text-xs text-blue-600 hover:text-blue-800"
+            >
+              Forgot password?
+            </Link>
           </div>
           <Button type="submit" disabled={loading}>
             {loading ? "Loading..." : "Login"}
