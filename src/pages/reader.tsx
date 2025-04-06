@@ -13,6 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Loading from "@/components/Loading";
 
 const Reader: FC = () => {
   const [searchParams] = useSearchParams();
@@ -107,11 +108,7 @@ const Reader: FC = () => {
   }, [currentPage, activeBook]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
+    <Loading />;
   }
 
   if (error || !activeBook) {

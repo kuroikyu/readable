@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -58,11 +59,7 @@ const ReaderStats: FC = () => {
   }, [activeBook]);
 
   if (bookLoading || bookStatsLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
+    <Loading />;
   }
 
   if (bookError || bookStatsError || !activeBook) {

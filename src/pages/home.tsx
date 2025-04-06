@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { fetchBooks } from "@/store/feature/books/booksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import Loading from "@/components/Loading";
 
 const Home: FC = () => {
   const dispatch = useAppDispatch();
@@ -27,11 +28,7 @@ const Home: FC = () => {
   }, [dispatch]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
