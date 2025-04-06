@@ -135,7 +135,7 @@ export const signupUser = createAsyncThunk(
         last_name: lastName,
       };
 
-      const user = await client.post("/users", JSON.stringify(newUser));
+      const user = await client.post("/users", newUser);
 
       if (!isUser(user)) {
         return rejectWithValue("Failed to create account");
