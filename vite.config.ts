@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
@@ -15,5 +16,13 @@ export default defineConfig({
     watch: {
       ignored: [path.resolve(__dirname, "./server/**")],
     },
+  },
+  test: {
+    browser: {
+      enabled: true,
+      provider: "playwright",
+      instances: [{ browser: "chromium" }],
+    },
+    globals: true,
   },
 });
