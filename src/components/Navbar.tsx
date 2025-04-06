@@ -80,7 +80,7 @@ const Navbar: FC = () => {
                   <Link to="/login">Login</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/register">Sign Up</Link>
+                  <Link to="/signup">Sign Up</Link>
                 </Button>
               </div>
             )}
@@ -152,7 +152,7 @@ const Navbar: FC = () => {
                   </Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
+                  <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
                     Sign Up
                   </Link>
                 </Button>
