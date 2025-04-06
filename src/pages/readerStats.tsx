@@ -1,5 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { fetchBookById } from "@/store/feature/books/booksSlice";
 import { fetchBookStatsByUser } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -110,11 +115,18 @@ const ReaderStats: FC = () => {
           <h1 className="text-brand-secondary-700/70 text-2xl font-bold">
             {activeBook.title}
           </h1>
-          <Button asChild variant="outline" size="icon">
-            <Link to="/" aria-label="Close">
-              <X className="h-4 w-4" />
-            </Link>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button asChild variant="outline" size="icon">
+                <Link to="/" aria-label="Close">
+                  <X className="h-4 w-4" />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Close</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Card className="-mx-6 my-6 rounded-none md:-mx-0 md:rounded-xl">

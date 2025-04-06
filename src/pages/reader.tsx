@@ -8,6 +8,11 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { fetchBookById } from "@/store/feature/books/booksSlice";
 import { updateBookStats } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Reader: FC = () => {
   const [searchParams] = useSearchParams();
@@ -126,14 +131,21 @@ const Reader: FC = () => {
         <h1 className="text-brand-secondary-700/70 text-2xl font-bold">
           {activeBook.title}
         </h1>
-        <Button asChild variant="outline" size="icon">
-          <Link
-            to={{ pathname: "stats", search: `?b=${bookId}` }}
-            aria-label="Close"
-          >
-            <X className="h-4 w-4" />
-          </Link>
-        </Button>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button asChild variant="outline" size="icon">
+              <Link
+                to={{ pathname: "stats", search: `?b=${bookId}` }}
+                aria-label="Close"
+              >
+                <X className="h-4 w-4" />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Close</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       <Card className="-mx-6 mt-6 mb-22 rounded-none md:-mx-0 md:mb-6 md:rounded-xl">
