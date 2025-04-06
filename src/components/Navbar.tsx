@@ -134,7 +134,7 @@ const Navbar: FC = () => {
                 </Link>
                 <button
                   onClick={() => {
-                    logout();
+                    handleLogout();
                     setMobileMenuOpen(false);
                   }}
                   className="block w-full px-4 py-2 text-left text-base font-medium text-red-500 hover:bg-gray-100"
