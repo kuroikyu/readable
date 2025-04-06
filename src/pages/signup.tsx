@@ -65,7 +65,7 @@ const Signup: FC = () => {
               id="userId"
               name="userId"
               type="text"
-              placeholder="steve891"
+              placeholder="User ID"
               required
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
@@ -80,7 +80,7 @@ const Signup: FC = () => {
               id="password"
               name="password"
               type="password"
-              placeholder="********"
+              placeholder="Password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -95,7 +95,7 @@ const Signup: FC = () => {
               id="password2"
               name="password2"
               type="password"
-              placeholder="********"
+              placeholder="Password"
               required
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
@@ -108,6 +108,7 @@ const Signup: FC = () => {
               id="first-name"
               name="first-name"
               type="text"
+              placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -119,6 +120,7 @@ const Signup: FC = () => {
               id="last-name"
               name="last-name"
               type="text"
+              placeholder="Last name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />

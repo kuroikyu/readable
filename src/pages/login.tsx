@@ -53,7 +53,6 @@ const Login: FC = () => {
               id="userId"
               name="userId"
               type="text"
-              placeholder="steve879"
               required
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
@@ -66,7 +65,6 @@ const Login: FC = () => {
               id="password"
               name="password"
               type="password"
-              placeholder="********"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
