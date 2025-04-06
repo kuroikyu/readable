@@ -85,7 +85,7 @@ const Login: FC = () => {
       </CardContent>
       <CardFooter className="flex justify-center border-t p-4">
         <div className="text-sm text-gray-600">
-          Don't have an accont?{" "}
+          <span>Don't have an account? </span>
           <Link to="/signup" className="text-blue-600 hover:text-blue-800">
             Sign up
           </Link>
