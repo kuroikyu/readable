@@ -1,12 +1,5 @@
+import client from "@/lib/client";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-if (!API_BASE_URL) {
-  console.error(
-    "FATAL ERROR: VITE_API_BASE_URL environment variable is not set!",
-  );
-}
 
 interface User {
   id: string;
@@ -61,12 +54,12 @@ export const loginUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/users`);
-      const users = await response.json();
+      const users = await client.get("/users");
 
       if (!Array.isArray(users) || users.length === 0) {
         return rejectWithValue("Could not retrieve users from the database.");
       }
+
       if (!areUsers(users)) {
         return rejectWithValue(
           "The database contains invalid users. Please contact the administrator.",
@@ -117,15 +110,17 @@ export const signupUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const checkResponse = await fetch(`${API_BASE_URL}/users?id=${userId}`);
-      const existingUsers = await checkResponse.json();
+      const existingUsers = await client.get("/users", { id: userId });
 
       if (Array.isArray(existingUsers) && existingUsers.length > 0) {
         return rejectWithValue("This username is aleady registered");
       }
 
-      const userResponse = await fetch(`${API_BASE_URL}/users`);
-      const users = await userResponse.json();
+      const users = await client.get("/users");
+
+      if (!Array.isArray(users) || users.length === 0) {
+        return rejectWithValue("Could not retrieve users from the database.");
+      }
 
       if (!areUsers(users)) {
         return rejectWithValue(
@@ -140,25 +135,13 @@ export const signupUser = createAsyncThunk(
         last_name: lastName,
       };
 
-      const createResponse = await fetch(`${API_BASE_URL}/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      });
-
-      if (!createResponse.ok) {
-        return rejectWithValue("Failed to create account");
-      }
-
-      const user = await createResponse.json();
+      const user = await client.post("/users", JSON.stringify(newUser));
 
       if (!isUser(user)) {
         return rejectWithValue("Failed to create account");
       }
 
-      // Don't try this at home
+      // WARN: Don't try this at home
       const token = `not-a-jwt-token-${user.id}-${Date.now()}`;
 
       localStorage.setItem("user", JSON.stringify(user));
