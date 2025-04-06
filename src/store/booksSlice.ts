@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import client from "@/lib/client";
+import { AuthToken } from "@/lib/apiClient";
 import {
   areBooksWithPages,
   BookOverview,
@@ -70,8 +71,13 @@ export const fetchBooks = createAsyncThunk(
 
 export const fetchBookById = createAsyncThunk(
   "books/fetchBookById",
-  async (bookId: string, { rejectWithValue }) => {
+  async (
+    { bookId, authToken }: { bookId: string; authToken: AuthToken },
+    { rejectWithValue },
+  ) => {
     try {
+      client.setAuthToken(authToken);
+
       const book = await client.get(`/books/${bookId}`);
 
       if (!isBookWithPages(book)) {

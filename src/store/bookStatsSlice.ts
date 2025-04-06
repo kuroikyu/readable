@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import client from "@/lib/client";
 import { BookStats } from "./types";
+import { AuthToken } from "@/lib/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -24,8 +25,13 @@ const initialState: BookStatsState = {
 
 export const fetchBookStatsByUser = createAsyncThunk(
   "bookStats/fetchBookStatsByUser",
-  async (userId: string, { rejectWithValue }) => {
+  async (
+    { userId, authToken }: { userId: string; authToken: AuthToken },
+    { rejectWithValue },
+  ) => {
     try {
+      client.setAuthToken(authToken);
+
       const bookStats = await client.get<BookStats[]>("/book_stats", {
         user_id: userId,
       });
@@ -50,12 +56,16 @@ export const updateBookStats = createAsyncThunk(
     bookId,
     pageNumber,
     timeSpentInMs,
+    authToken,
   }: {
     userId: string;
     bookId: string;
     pageNumber: number;
     timeSpentInMs: number;
+    authToken: AuthToken;
   }) => {
+    client.setAuthToken(authToken);
+
     const existingStats = await client.get<BookStats[]>("/book_stats", {
       user_id: userId,
       book_id: bookId,

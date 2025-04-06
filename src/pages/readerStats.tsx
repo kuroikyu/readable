@@ -13,6 +13,7 @@ const ReaderStats: FC = () => {
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const authToken = useAppSelector((state) => state.auth.token);
 
   const bookStats = useAppSelector((state) => state.bookStats.bookStats);
   const bookStatsError = useAppSelector((state) => state.bookStats.error);
@@ -23,14 +24,14 @@ const ReaderStats: FC = () => {
   const bookLoading = useAppSelector((state) => state.books.loading);
 
   useEffect(() => {
-    if (bookId && user && !activeBook) {
-      dispatch(fetchBookById(bookId));
+    if (bookId && user && authToken && !activeBook) {
+      dispatch(fetchBookById({ bookId, authToken }));
     }
 
-    if (bookId && user && (!bookStats || bookStats.length === 0)) {
-      dispatch(fetchBookStatsByUser(bookId));
+    if (bookId && user && authToken && (!bookStats || bookStats.length === 0)) {
+      dispatch(fetchBookStatsByUser({ userId: user.id, authToken }));
     }
-  }, [dispatch, bookId, user, activeBook]);
+  }, [dispatch, bookId, user, authToken, activeBook]);
 
   if (bookLoading || bookStatsLoading) {
     return (
