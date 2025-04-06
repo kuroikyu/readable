@@ -11,6 +11,7 @@ import ReaderLayout from "./layouts/ReaderLayout";
 import Reader from "./pages/reader";
 import ReaderStats from "./pages/readerStats";
 import { TooltipProvider } from "./components/ui/tooltip";
+import Page404 from "./pages/404";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
             <Route index element={<Reader />} />
             <Route path="stats" element={<ReaderStats />} />
           </Route>
+
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </TooltipProvider>
     </Provider>
