@@ -120,7 +120,10 @@ const Reader: FC = () => {
           {activeBook.title}
         </h1>
         <Button asChild variant="outline" size="icon">
-          <Link to={{ pathname: "stats", search: `?b=${bookId}` }}>
+          <Link
+            to={{ pathname: "stats", search: `?b=${bookId}` }}
+            aria-label="Close"
+          >
             <X className="h-4 w-4" />
           </Link>
         </Button>
@@ -140,6 +143,7 @@ const Reader: FC = () => {
           <Button
             variant="outline"
             size="lg"
+            aria-label="Previous page"
             onClick={goToPreviousPage}
             disabled={currentPage === 0}
           >
@@ -151,6 +155,7 @@ const Reader: FC = () => {
           <Button
             variant="outline"
             size="lg"
+            aria-label="Next page"
             onClick={goToNextPage}
             disabled={currentPage === activeBook.pages.length - 1}
           >

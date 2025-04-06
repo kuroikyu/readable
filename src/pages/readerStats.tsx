@@ -92,7 +92,7 @@ const ReaderStats: FC = () => {
             {activeBook.title}
           </h1>
           <Button asChild variant="outline" size="icon">
-            <Link to="/">
+            <Link to="/" aria-label="Close">
               <X className="h-4 w-4" />
             </Link>
           </Button>
