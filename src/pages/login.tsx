@@ -48,37 +48,33 @@ const Login: FC = () => {
           )}
 
           <div className="flex flex-col gap-y-2">
-            <Label htmlFor="userId">User ID</Label>
+            <Label htmlFor="userId">Username</Label>
             <Input
               id="userId"
-              name="userId"
+              name="Username"
               type="text"
-              placeholder="steve879"
               required
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
           </div>
 
-          <div className="flex flex-col gap-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
-              <Link
-                to="/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-800"
-              >
-                Forgot password?
-              </Link>
-            </div>
+          <div className="relative flex flex-col gap-y-2">
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               name="password"
               type="password"
-              placeholder="********"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Link
+              to="/forgot-password"
+              className="absolute top-0 right-0 float-right text-xs text-blue-600 hover:text-blue-800"
+            >
+              Forgot password?
+            </Link>
           </div>
           <Button type="submit" disabled={loading}>
             {loading ? "Loading..." : "Login"}
@@ -87,7 +83,7 @@ const Login: FC = () => {
       </CardContent>
       <CardFooter className="flex justify-center border-t p-4">
         <div className="text-sm text-gray-600">
-          Don't have an accont?{" "}
+          <span>Don't have an account? </span>
           <Link to="/signup" className="text-blue-600 hover:text-blue-800">
             Sign up
           </Link>

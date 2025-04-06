@@ -59,13 +59,13 @@ const Signup: FC = () => {
 
           <div className="flex flex-col gap-y-2">
             <Label htmlFor="userId">
-              User ID <span className="text-red-500">*</span>
+              Username <span className="text-red-500">*</span>
             </Label>
             <Input
               id="userId"
               name="userId"
               type="text"
-              placeholder="steve891"
+              placeholder="Username"
               required
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
@@ -80,7 +80,7 @@ const Signup: FC = () => {
               id="password"
               name="password"
               type="password"
-              placeholder="********"
+              placeholder="Password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -95,7 +95,7 @@ const Signup: FC = () => {
               id="password2"
               name="password2"
               type="password"
-              placeholder="********"
+              placeholder="Password"
               required
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
@@ -108,6 +108,7 @@ const Signup: FC = () => {
               id="first-name"
               name="first-name"
               type="text"
+              placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -119,6 +120,7 @@ const Signup: FC = () => {
               id="last-name"
               name="last-name"
               type="text"
+              placeholder="Last name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
