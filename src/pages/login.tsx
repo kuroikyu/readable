@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { loginUser } from "@/store/authSlice";
+import { loginUser } from "@/store/feature/auth/authSlice";
 
 const Login: FC = () => {
   const [userId, setUserId] = useState("");

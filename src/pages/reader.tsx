@@ -5,8 +5,8 @@ import { marked } from "marked";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { fetchBookById } from "@/store/booksSlice";
-import { updateBookStats } from "@/store/bookStatsSlice";
+import { fetchBookById } from "@/store/feature/books/booksSlice";
+import { updateBookStats } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Reader: FC = () => {

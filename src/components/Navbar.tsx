@@ -10,7 +10,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { BookOpen, Heart, LogOut, Menu, User, X } from "lucide-react";
-import { logout } from "../store/authSlice";
+import { logout } from "@/store/feature/auth/authSlice";
 
 const Navbar: FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

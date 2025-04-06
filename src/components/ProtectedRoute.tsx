@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useEffect } from "react";
 import { Navigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchBookStatsByUser } from "@/store/bookStatsSlice";
+import { fetchBookStatsByUser } from "@/store/feature/books/bookStatsSlice";
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);

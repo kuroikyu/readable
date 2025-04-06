@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { fetchBookById } from "@/store/booksSlice";
-import { fetchBookStatsByUser } from "@/store/bookStatsSlice";
+import { fetchBookById } from "@/store/feature/books/booksSlice";
+import { fetchBookStatsByUser } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { X } from "lucide-react";
 import { FC, useEffect } from "react";
