@@ -31,10 +31,10 @@ const Login: FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="text-brand-secondary-700 w-full max-w-md">
       <CardHeader className="gap-y-2">
         <CardTitle className="text-2xl font-bold">Login</CardTitle>
-        <CardDescription>
+        <CardDescription className="text-brand-secondary-800/70">
           Enter your credentials to start reading
         </CardDescription>
       </CardHeader>
@@ -71,20 +71,27 @@ const Login: FC = () => {
             />
             <Link
               to="/forgot-password"
-              className="absolute top-0 right-0 float-right text-xs text-blue-600 hover:text-blue-800"
+              className="text-brand-primary-500 hover:text-brand-primary-800 absolute top-0 right-0 float-right text-xs"
             >
               Forgot password?
             </Link>
           </div>
-          <Button type="submit" disabled={loading}>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="from-brand-secondary-500 to-brand-primary-500 hover:from-brand-secondary-400 hover:to-brand-primary-400 bg-linear-to-r"
+          >
             {loading ? "Loading..." : "Login"}
           </Button>
         </form>
       </CardContent>
       <CardFooter className="flex justify-center border-t p-4">
-        <div className="text-sm text-gray-600">
+        <div className="text-brand-secondary-700/70 text-sm">
           <span>Don't have an account? </span>
-          <Link to="/signup" className="text-blue-600 hover:text-blue-800">
+          <Link
+            to="/signup"
+            className="text-brand-primary-600 hover:text-brand-primary-800"
+          >
             Sign up
           </Link>
         </div>

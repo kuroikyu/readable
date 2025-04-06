@@ -85,21 +85,28 @@ const ReaderStats: FC = () => {
   const timePerPageDate = new Date(timePerPage);
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 pt-6 md:p-6">
+    <div className="container mx-auto max-w-3xl p-6 md:px-0">
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">{activeBook.title}</h1>
+          <h1 className="text-brand-secondary-700/70 text-2xl font-bold">
+            {activeBook.title}
+          </h1>
           <Button asChild variant="outline" size="icon">
             <Link to="/">
               <X className="h-4 w-4" />
             </Link>
           </Button>
         </div>
-        <Card className="-mx-6 my-6 rounded-none md:-mx-0 md:rounded-xl">
-          <CardContent className="mb-6 max-w-none">
-            <h2 className="mt-14 mb-8 text-3xl font-bold">Book statistics</h2>
 
-            <h3 className="mt-6 mb-4 text-xl font-bold">Total reading time</h3>
+        <Card className="-mx-6 my-6 rounded-none md:-mx-0 md:rounded-xl">
+          <CardContent className="mb-6 max-w-none text-black/80">
+            <h2 className="text-brand-secondary-800/90 mt-14 mb-8 text-3xl font-bold">
+              Book statistics
+            </h2>
+
+            <h3 className="text-brand-secondary-700/90 mt-6 mb-4 text-xl font-bold">
+              Total reading time
+            </h3>
             <div className="flex justify-evenly">
               <div className="flex flex-col text-center">
                 <span className="text-6xl font-bold">
@@ -123,7 +130,9 @@ const ReaderStats: FC = () => {
               </div>
             </div>
 
-            <h3 className="mt-6 mb-4 text-xl font-bold">Time per page</h3>
+            <h3 className="text-brand-secondary-700/90 mt-6 mb-4 text-xl font-bold">
+              Time per page
+            </h3>
             <div className="flex justify-evenly">
               <div className="flex flex-col text-center">
                 <span className="text-6xl font-bold">
@@ -147,8 +156,13 @@ const ReaderStats: FC = () => {
               </div>
             </div>
           </CardContent>
+
           <CardFooter className="flex justify-center border-t">
-            <Button size="lg" asChild>
+            <Button
+              size="lg"
+              className="from-brand-secondary-500 to-brand-primary-500 hover:from-brand-secondary-400 hover:to-brand-primary-400 bg-linear-to-r"
+              asChild
+            >
               <Link to="/">Pick another book</Link>
             </Button>
           </CardFooter>

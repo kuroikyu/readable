@@ -114,50 +114,50 @@ const Reader: FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 pt-6 md:p-6">
-      <div className="mx-auto max-w-3xl">
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">{activeBook.title}</h1>
-          <Button asChild variant="outline" size="icon">
-            <Link to={{ pathname: "stats", search: `?b=${bookId}` }}>
-              <X className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-
-        <Card className="-mx-6 my-6 rounded-none md:-mx-0 md:rounded-xl">
-          <CardContent className="prose prose-lg max-w-none">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: marked.parse(activeBook.pages[currentPage]),
-              }}
-            />
-          </CardContent>
-        </Card>
-        <Card className="sticky bottom-0 -mx-6 rounded-none md:-mx-0 md:rounded-xl">
-          <CardFooter className="flex justify-between">
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={goToPreviousPage}
-              disabled={currentPage === 0}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <div className="text-sm text-gray-500">
-              Page {currentPage + 1} of {activeBook.pages.length}
-            </div>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={goToNextPage}
-              disabled={currentPage === activeBook.pages.length - 1}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </CardFooter>
-        </Card>
+    <div className="container mx-auto max-w-3xl p-6 md:px-0">
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-brand-secondary-700/70 text-2xl font-bold">
+          {activeBook.title}
+        </h1>
+        <Button asChild variant="outline" size="icon">
+          <Link to={{ pathname: "stats", search: `?b=${bookId}` }}>
+            <X className="h-4 w-4" />
+          </Link>
+        </Button>
       </div>
+
+      <Card className="-mx-6 my-6 rounded-none md:-mx-0 md:rounded-xl">
+        <CardContent className="prose prose-h2:text-brand-secondary-800/90 prose-h2:text-center prose-lg max-w-none">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: marked.parse(activeBook.pages[currentPage]),
+            }}
+          />
+        </CardContent>
+      </Card>
+      <Card className="sticky bottom-0 -mx-6 rounded-none md:-mx-0 md:rounded-xl">
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={goToPreviousPage}
+            disabled={currentPage === 0}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <div className="text-sm text-gray-500">
+            Page {currentPage + 1} of {activeBook.pages.length}
+          </div>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={goToNextPage}
+            disabled={currentPage === activeBook.pages.length - 1}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

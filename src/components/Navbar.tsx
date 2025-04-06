@@ -29,7 +29,12 @@ const Navbar: FC = () => {
         <div className="flex h-16 justify-between">
           <div className="flex">
             <Link to="/" className="flex items-center">
-              <img src="/readable.svg" alt="readable" aria-label="home" />
+              <img
+                src="/readable.svg"
+                alt="readable"
+                aria-label="home"
+                className="h-7"
+              />
             </Link>
           </div>
 
