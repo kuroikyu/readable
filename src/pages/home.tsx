@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { fetchBooks } from "@/store/booksSlice";
+import { fetchBooks } from "@/store/feature/books/booksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Home: FC = () => {

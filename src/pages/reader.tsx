@@ -5,8 +5,8 @@ import { marked } from "marked";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { fetchBookById } from "@/store/booksSlice";
-import { updateBookStats } from "@/store/bookStatsSlice";
+import { fetchBookById } from "@/store/feature/books/booksSlice";
+import { updateBookStats } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Reader: FC = () => {
@@ -15,6 +15,7 @@ const Reader: FC = () => {
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const authToken = useAppSelector((state) => state.auth.token);
   const activeBook = useAppSelector((state) => state.books.activeBook);
   const loading = useAppSelector((state) => state.books.loading);
   const error = useAppSelector((state) => state.books.error);
@@ -24,7 +25,7 @@ const Reader: FC = () => {
   const startTimeRef = useRef(Date.now());
 
   const updateReadingStats = () => {
-    if (user && bookId && currentPage >= 0) {
+    if (user && authToken && bookId && currentPage >= 0) {
       const timeSpentInMs = Math.floor(Date.now() - startTimeRef.current);
       dispatch(
         updateBookStats({
@@ -32,6 +33,7 @@ const Reader: FC = () => {
           bookId: bookId,
           pageNumber: lastPageRef.current,
           timeSpentInMs,
+          authToken,
         }),
       );
     }
@@ -39,14 +41,14 @@ const Reader: FC = () => {
 
   useEffect(() => {
     if (bookId && user && (!activeBook || activeBook.id !== bookId)) {
-      dispatch(fetchBookById(bookId));
+      dispatch(fetchBookById({ bookId, authToken }));
     }
     startTimeRef.current = Date.now();
 
     return () => {
       updateReadingStats();
     };
-  }, [dispatch, user, bookId]);
+  }, [dispatch, user, authToken, bookId]);
 
   const changePage = (newPage: number) => {
     updateReadingStats();

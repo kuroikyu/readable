@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BookStats } from "./types";
-import { RootState } from ".";
+import client from "@/lib/client";
+import { BookStats } from "@/store/types";
+import { AuthToken } from "@/lib/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -24,18 +25,16 @@ const initialState: BookStatsState = {
 
 export const fetchBookStatsByUser = createAsyncThunk(
   "bookStats/fetchBookStatsByUser",
-  async (userId: string, { rejectWithValue }) => {
+  async (
+    { userId, authToken }: { userId: string; authToken: AuthToken },
+    { rejectWithValue },
+  ) => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/book_stats?user_id=${userId}`,
-      );
+      client.setAuthToken(authToken);
 
-      if (!response.ok) {
-        return rejectWithValue("Book stats not found");
-      }
-
-      // TODO: add type guards
-      const bookStats = (await response.json()) as BookStats[];
+      const bookStats = await client.get<BookStats[]>("/book_stats", {
+        user_id: userId,
+      });
 
       return { bookStats };
     } catch (err) {
@@ -52,38 +51,28 @@ export const fetchBookStatsByUser = createAsyncThunk(
 
 export const updateBookStats = createAsyncThunk(
   "bookStats/updateBookStats",
-  async (
-    {
-      userId,
-      bookId,
-      pageNumber,
-      timeSpentInMs,
-    }: {
-      userId: string;
-      bookId: string;
-      pageNumber: number;
-      timeSpentInMs: number;
-    },
-    { rejectWithValue, getState },
-  ) => {
-    const response = await fetch(
-      `${API_BASE_URL}/book_stats?user_id=${userId}&book_id=${bookId}`,
-    );
+  async ({
+    userId,
+    bookId,
+    pageNumber,
+    timeSpentInMs,
+    authToken,
+  }: {
+    userId: string;
+    bookId: string;
+    pageNumber: number;
+    timeSpentInMs: number;
+    authToken: AuthToken;
+  }) => {
+    client.setAuthToken(authToken);
 
-    if (!response.ok) {
-      return rejectWithValue("Failed to fetch book stats from the server");
-    }
+    const existingStats = await client.get<BookStats[]>("/book_stats", {
+      user_id: userId,
+      book_id: bookId,
+    });
 
-    const existingStats = await response.json();
-
-    if (
-      existingStats &&
-      Array.isArray(existingStats) &&
-      existingStats.length > 0
-    ) {
-      const currentData = getState() as RootState;
-      // FIXME: userId is number?
-      const bookStats = currentData.bookStats.bookStats.find((stat) => {
+    if (existingStats.length > 0) {
+      const bookStats = existingStats.find((stat) => {
         return (
           stat.book_id.toString() === bookId.toString() &&
           stat.user_id.toString() === userId.toString()
@@ -92,48 +81,28 @@ export const updateBookStats = createAsyncThunk(
       const previousTimeSpent =
         bookStats?.page_time[pageNumber.toString()] || 0;
 
-      const patchResponse = await fetch(
-        `${API_BASE_URL}/book_stats/${existingStats[0].id}`,
+      const updatedStat = await client.patch<Partial<BookStats>, BookStats>(
+        `/book_stats/${existingStats[0].id}`,
         {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
+          page_time: {
+            ...(bookStats?.page_time || {}),
+            [pageNumber.toString()]: timeSpentInMs + previousTimeSpent,
           },
-          body: JSON.stringify({
-            page_time: {
-              ...(bookStats?.page_time || {}),
-              [pageNumber.toString()]: timeSpentInMs + previousTimeSpent,
-            },
-          }),
         },
       );
-
-      if (!patchResponse.ok) {
-        return rejectWithValue("Failed to update stats");
-      }
-
-      const updatedStat = (await patchResponse.json()) as BookStats;
       return { bookStats: updatedStat };
     } else {
-      const createResponse = await fetch(`${API_BASE_URL}/book_stats`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const newStat = await client.post<Omit<BookStats, "id">, BookStats>(
+        "/book_stats",
+        {
           book_id: bookId.toString(),
           user_id: userId.toString(),
           page_time: {
             [pageNumber.toString()]: timeSpentInMs,
           },
-        }),
-      });
+        },
+      );
 
-      if (!createResponse.ok) {
-        return rejectWithValue("Failed to update reading statisticts");
-      }
-
-      const newStat = (await createResponse.json()) as BookStats;
       return { bookStats: newStat };
     }
   },

@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import client from "@/lib/client";
+import { AuthToken } from "@/lib/apiClient";
 import {
   areBooksWithPages,
   BookOverview,
   BookWithPages,
   isBookWithPages,
-} from "./types";
+} from "@/store/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -32,13 +34,7 @@ export const fetchBooks = createAsyncThunk(
   "books/fetchBooks",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/books`);
-
-      if (!response.ok) {
-        return rejectWithValue("Server error");
-      }
-
-      const books = await response.json();
+      const books = await client.get("/books");
 
       if (!Array.isArray(books) || books.length === 0) {
         return rejectWithValue("Could not retrieve books from the database.");
@@ -75,15 +71,14 @@ export const fetchBooks = createAsyncThunk(
 
 export const fetchBookById = createAsyncThunk(
   "books/fetchBookById",
-  async (bookId: string, { rejectWithValue }) => {
+  async (
+    { bookId, authToken }: { bookId: string; authToken: AuthToken },
+    { rejectWithValue },
+  ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/books/${bookId}`);
+      client.setAuthToken(authToken);
 
-      if (!response.ok) {
-        return rejectWithValue("Book not found");
-      }
-
-      const book = await response.json();
+      const book = await client.get(`/books/${bookId}`);
 
       if (!isBookWithPages(book)) {
         return rejectWithValue(

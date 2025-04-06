@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signupUser } from "@/store/authSlice";
+import { signupUser } from "@/store/feature/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Signup: FC = () => {

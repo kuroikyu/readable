@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { fetchBookById } from "@/store/booksSlice";
-import { fetchBookStatsByUser } from "@/store/bookStatsSlice";
+import { fetchBookById } from "@/store/feature/books/booksSlice";
+import { fetchBookStatsByUser } from "@/store/feature/books/bookStatsSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { X } from "lucide-react";
 import { FC, useEffect } from "react";
@@ -13,6 +13,7 @@ const ReaderStats: FC = () => {
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const authToken = useAppSelector((state) => state.auth.token);
 
   const bookStats = useAppSelector((state) => state.bookStats.bookStats);
   const bookStatsError = useAppSelector((state) => state.bookStats.error);
@@ -23,14 +24,14 @@ const ReaderStats: FC = () => {
   const bookLoading = useAppSelector((state) => state.books.loading);
 
   useEffect(() => {
-    if (bookId && user && !activeBook) {
-      dispatch(fetchBookById(bookId));
+    if (bookId && user && authToken && !activeBook) {
+      dispatch(fetchBookById({ bookId, authToken }));
     }
 
-    if (bookId && user && (!bookStats || bookStats.length === 0)) {
-      dispatch(fetchBookStatsByUser(bookId));
+    if (bookId && user && authToken && (!bookStats || bookStats.length === 0)) {
+      dispatch(fetchBookStatsByUser({ userId: user.id, authToken }));
     }
-  }, [dispatch, bookId, user, activeBook]);
+  }, [dispatch, bookId, user, authToken, activeBook]);
 
   if (bookLoading || bookStatsLoading) {
     return (
