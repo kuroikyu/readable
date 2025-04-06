@@ -58,8 +58,8 @@ const ReaderStats: FC = () => {
     };
   }, [activeBook]);
 
-  if (bookLoading || bookStatsLoading) {
-    <Loading />;
+  if (bookLoading || bookStatsLoading || activeBook?.id !== bookId) {
+    return <Loading />;
   }
 
   if (bookError || bookStatsError || !activeBook) {

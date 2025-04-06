@@ -107,8 +107,8 @@ const Reader: FC = () => {
     };
   }, [currentPage, activeBook]);
 
-  if (loading) {
-    <Loading />;
+  if (loading || activeBook?.id !== bookId) {
+    return <Loading />;
   }
 
   if (error || !activeBook) {
