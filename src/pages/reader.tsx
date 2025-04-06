@@ -136,7 +136,7 @@ const Reader: FC = () => {
         </Button>
       </div>
 
-      <Card className="-mx-6 my-6 rounded-none md:-mx-0 md:rounded-xl">
+      <Card className="-mx-6 mt-6 mb-22 rounded-none md:-mx-0 md:mb-6 md:rounded-xl">
         <CardContent className="prose prose-h2:text-brand-secondary-800/90 prose-h2:text-center prose-lg max-w-none">
           <div
             dangerouslySetInnerHTML={{
@@ -145,7 +145,7 @@ const Reader: FC = () => {
           />
         </CardContent>
       </Card>
-      <Card className="sticky bottom-0 -mx-6 rounded-none md:-mx-0 md:rounded-xl">
+      <Card className="fixed bottom-0 -mx-6 w-full rounded-none md:sticky md:-mx-0 md:rounded-xl">
         <CardFooter className="flex justify-between">
           <Button
             variant="outline"
