@@ -59,13 +59,13 @@ const Signup: FC = () => {
 
           <div className="flex flex-col gap-y-2">
             <Label htmlFor="userId">
-              User ID <span className="text-red-500">*</span>
+              Username <span className="text-red-500">*</span>
             </Label>
             <Input
               id="userId"
               name="userId"
               type="text"
-              placeholder="User ID"
+              placeholder="Username"
               required
               value={userId}
               onChange={(e) => setUserId(e.target.value)}

@@ -48,10 +48,10 @@ const Login: FC = () => {
           )}
 
           <div className="flex flex-col gap-y-2">
-            <Label htmlFor="userId">User ID</Label>
+            <Label htmlFor="userId">Username</Label>
             <Input
               id="userId"
-              name="userId"
+              name="Username"
               type="text"
               required
               value={userId}

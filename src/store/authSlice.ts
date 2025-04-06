@@ -121,7 +121,7 @@ export const signupUser = createAsyncThunk(
       const existingUsers = await checkResponse.json();
 
       if (Array.isArray(existingUsers) && existingUsers.length > 0) {
-        return rejectWithValue("This user ID is aleady registered");
+        return rejectWithValue("This username is aleady registered");
       }
 
       const userResponse = await fetch(`${API_BASE_URL}/users`);
