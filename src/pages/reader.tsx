@@ -155,6 +155,7 @@ const Reader: FC = () => {
             disabled={currentPage === 0}
           >
             <ChevronLeft className="h-4 w-4" />
+            <span>Back</span>
           </Button>
           <div className="text-sm text-gray-500">
             Page {currentPage + 1} of {activeBook.pages.length}
@@ -166,6 +167,7 @@ const Reader: FC = () => {
             onClick={goToNextPage}
             disabled={currentPage === activeBook.pages.length - 1}
           >
+            <span>Next</span>
             <ChevronRight className="h-4 w-4" />
           </Button>
         </CardFooter>
