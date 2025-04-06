@@ -126,7 +126,11 @@ const Signup: FC = () => {
             />
           </div>
 
-          <Button type="submit" disabled={loading}>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="from-brand-secondary-500 to-brand-primary-500 hover:from-brand-secondary-400 hover:to-brand-primary-400 bg-linear-to-r"
+          >
             {loading ? "Creating your account..." : "Sign up"}
           </Button>
         </form>
@@ -134,7 +138,10 @@ const Signup: FC = () => {
       <CardFooter className="flex justify-center border-t p-4">
         <div className="text-sm text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-600 hover:text-blue-800">
+          <Link
+            to="/login"
+            className="text-brand-primary-600 hover:text-brand-primary-800"
+          >
             Login
           </Link>
         </div>

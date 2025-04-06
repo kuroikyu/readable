@@ -1,4 +1,4 @@
-# Readable
+# ![readable](./src/assets/readable.png)
 Your friendly neighborhood book reader.
 
 
@@ -31,7 +31,7 @@ Build the frontend.
 pnpm run build
 ```
 
-Run the app.
+Run the app. This should be available under `http://localhost:4173` but watch the terminal for more details.
 ```sh
 pnpm run preview
 ```

@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect } from "react";
-import { Navigate } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchBookStatsByUser } from "@/store/feature/books/bookStatsSlice";
 
@@ -8,6 +8,7 @@ const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
   const user = useAppSelector((state) => state.auth.user);
   const authToken = useAppSelector((state) => state.auth.token);
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (user) {
@@ -16,7 +17,7 @@ const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
   }, [dispatch, user]);
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" state={{ nextRoute: location }} />;
   }
 
   return <>{children}</>;

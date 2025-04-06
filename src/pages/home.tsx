@@ -14,8 +14,11 @@ import { fetchBooks } from "@/store/feature/books/booksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Home: FC = () => {
-  const { books, error, loading } = useAppSelector((state) => state.books);
   const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const books = useAppSelector((state) => state.books.books);
+  const error = useAppSelector((state) => state.books.error);
+  const loading = useAppSelector((state) => state.books.loading);
 
   useEffect(() => {
     if (!books || books.length === 0) {
@@ -44,7 +47,9 @@ const Home: FC = () => {
       <h1 className="sr-only">Readable</h1>
 
       <div className="grid gap-6">
-        <h2 className="text-xl font-semibold">Our Books</h2>
+        <h2 className="text-brand-secondary-700/90 text-xl font-semibold">
+          Our Books
+        </h2>
         {!books || books.length === 0 ? (
           <p>No books available.</p>
         ) : (
@@ -61,19 +66,28 @@ const Home: FC = () => {
                   </div>
                   <div className="flex flex-1 flex-col">
                     <CardHeader>
-                      <CardTitle className="text-2xl">{book.title}</CardTitle>
-                      <CardDescription>By {book.author}</CardDescription>
+                      <CardTitle className="text-brand-secondary-800 text-2xl">
+                        {book.title}
+                      </CardTitle>
+                      <CardDescription className="text-brand-secondary-700/80">
+                        By {book.author}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="mt-4 flex flex-1 flex-col justify-between gap-4">
-                      <p className="flex grow gap-x-2 text-xs text-gray-500">
+                      <p className="text-brand-secondary-700/80 flex grow gap-x-2 text-xs">
                         {book.blurb}
                       </p>
-                      <p className="flex items-center gap-x-2 text-sm text-gray-500">
+                      <p className="text-brand-secondary-700/80 flex items-center gap-x-2 text-sm">
                         <List className="h-4 w-4" />
                         {book.noOfPages} pages
                       </p>
-                      <Button asChild className="mt-auto w-full">
-                        <Link to={`/read?b=${book.id}`}>Read Book</Link>
+                      <Button
+                        asChild
+                        className="bg-brand-primary-500 hover:bg-brand-primary-400 mt-auto w-full"
+                      >
+                        <Link to={`/read?b=${book.id}`}>
+                          {isAuthenticated ? "Read Book" : "Login to Read Book"}
+                        </Link>
                       </Button>
                     </CardContent>
                   </div>

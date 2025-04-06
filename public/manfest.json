@@ -1,0 +1,17 @@
+{
+  "short_name": "Readable",
+  "name": "Readable",
+  "description": "Your friendly neighborhood book reader.",
+  "icons": [
+    {
+      "src": "/readable_icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#f9f3fc",
+  "background_color": "#f9f3fc"
+}
+
