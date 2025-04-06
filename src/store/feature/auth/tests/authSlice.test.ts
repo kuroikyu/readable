@@ -3,7 +3,7 @@
  */
 
 import { expect, test } from "vitest";
-import reducer from "./authSlice";
+import reducer from "../authSlice";
 
 test("should return the initial state", () => {
   expect(reducer(undefined, { type: "unknown" })).toEqual({

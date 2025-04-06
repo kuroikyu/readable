@@ -3,7 +3,7 @@
  */
 
 import { expect, test } from "vitest";
-import reducer, { BooksState } from "./booksSlice";
+import reducer, { BooksState } from "../booksSlice";
 
 const initialState: BooksState = {
   books: [],
