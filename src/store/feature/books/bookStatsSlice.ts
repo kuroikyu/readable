@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import client from "@/lib/client";
-import { BookStats } from "./types";
+import { BookStats } from "@/store/types";
 import { AuthToken } from "@/lib/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
